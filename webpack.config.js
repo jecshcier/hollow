@@ -18,7 +18,7 @@ const config = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['react','env']
+          presets: ['react', 'env']
         },
       }
     }, {
@@ -40,13 +40,15 @@ const config = {
         }
       ]
     }
-    
+
     ]
   },
   devServer: {
     contentBase: path.join(__dirname, "dist"),
-    compress: true,
+    compress: false,
     port: 9000
+    // inline: true,
+    // hot: true
   },
   plugins: [
     new webpack.optimize.CommonsChunkPlugin({

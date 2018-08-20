@@ -4,6 +4,10 @@ body {
     width: 100%;
     height: 100%;
     display: flex;
+    margin: 0;
+    padding: 0;
+    overflow-y: auto;
+    overflow-x: hidden;
 }
 
 .main{
@@ -26,9 +30,4 @@ body {
     border-radius: 10px;
     margin: 5px;
     cursor: pointer;
-    transition: transform .3s;
-}
-.main-group:hover{
-    transform: scale(1.5);
-    box-shadow: 0px 1px 6px 0px #2b2b2b;
 }

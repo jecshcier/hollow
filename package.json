@@ -9,7 +9,7 @@
     "start:init": "webpack --progress --colors"
   },
   "keywords": [
-    "ebook"
+    "hollow"
   ],
   "author": "shayneC",
   "license": "ISC",
