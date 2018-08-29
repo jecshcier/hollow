@@ -1,66 +1,73 @@
-const path = require('path')
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+//生产环境配置
 const webpack = require('webpack')
+const merge = require('webpack-merge')
+const ExtractTextPlugin = require("extract-text-webpack-plugin")
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin')
+const path = require('path')
+const ncp = require('ncp')
+const common = require('./webpack.common')
 
-const config = {
-  entry: {
-    main: './dev/index.js',
-    vendor: ['react', 'react-dom', 'antd']
-  },
-  output: {
-    filename: 'js/[name].js',
-    path: path.join(__dirname, "dist")
-  },
-  module: {
-    rules: [{
-      test: /\.js$/,
-      exclude: /(node_modules|bower_components)/,
-      use: {
-        loader: 'babel-loader',
-        options: {
-          presets: ['react', 'env']
-        },
-      }
-    }, {
-      test: /\.css$/,
-      // exclude: /node_modules/,
-      // include: path.resolve(__dirname, 'node_modules/antd/'),
-      use: [
-        {
-          loader: 'style-loader',
-        },
-        {
-          loader: 'css-loader',
-          options: {
-            importLoaders: 1,
-          }
-        },
-        {
-          loader: 'postcss-loader'
-        }
+const config = (env) => {
+  //init
+  if (env.MODE === 'init') {
+    return merge(common, {
+      plugins: [
+        copyDevFiles()
       ]
-    }
-
-    ]
-  },
-  devServer: {
-    contentBase: path.join(__dirname, "dist"),
-    compress: false,
-    port: 9000
-    // inline: true,
-    // hot: true
-  },
-  plugins: [
-    new webpack.optimize.CommonsChunkPlugin({
-      name: "vendor",
-      filename: "js/lib/vender.bundle.js"
-    }),
-    new HtmlWebpackPlugin({
-      title: 'hollow',
-      filename: 'index.html',
-      template: path.join(__dirname, 'dev/templates/index.html')
     })
-  ]
-};
+  }
+  //development
+  else if (env.MODE === 'dev') {
+    return merge(common, {
+      devServer: {
+        contentBase: path.join(__dirname, "dist"),
+        compress: true,
+        port: 9000,
+        hot: true
+      }
+    })
+  }
+  //product
+  else {
+    return merge.smart(common, {
+      module: {
+        rules: [{
+          test: /\.css$/,
+          use: ExtractTextPlugin.extract({
+            fallback: "style-loader",
+            use: ['css-loader', 'postcss-loader']
+          })
+        }]
+      },
+      plugins: [
+        new UglifyJsPlugin({
+          test: /\.js($|\?)/i,
+          exclude: /(node_modules|bower_components)/
+        }),
+        new ExtractTextPlugin('css/[name].css'),
+        copyDevFiles()
+      ]
+    })
+  }
+}
+
+/**
+ * 复制dev中的静态资源文件
+ * @returns {webpack.ProgressPlugin}
+ */
+function copyDevFiles() {
+  return new webpack.ProgressPlugin((percentage, message, ...args) => {
+    if (percentage === 1) {
+      console.log("编译完成，正在拷贝文件---->")
+      ncp.limit = 16;
+      ncp(path.join(__dirname, 'dev/lib'), path.join(__dirname, 'dist/lib'), function (err) {
+        if (err) {
+          return console.error(err);
+        }
+        console.log('文件拷贝完成！');
+      });
+    }
+  })
+}
 
 module.exports = config

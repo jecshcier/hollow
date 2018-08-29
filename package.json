@@ -4,9 +4,9 @@
   "description": "a hollow.",
   "main": "index.js",
   "scripts": {
-    "start:dev": "webpack-dev-server",
-    "start:product": "webpack --progress --colors --config webpack.product.js",
-    "start:init": "webpack --progress --colors"
+    "start:dev": "webpack-dev-server --env.MODE=dev",
+    "start:product": "webpack --env.MODE=product --progress --colors",
+    "start:init": "webpack --env.MODE=init --progress --colors"
   },
   "keywords": [
     "hollow"
@@ -31,11 +31,14 @@
     "babel-preset-react": "^6.24.1",
     "css-loader": "^0.28.9",
     "extract-text-webpack-plugin": "^3.0.2",
+    "fs-extra": "^7.0.0",
     "html-webpack-plugin": "^2.30.1",
+    "ncp": "^2.0.0",
     "postcss-loader": "^2.0.10",
     "style-loader": "^0.19.1",
     "uglifyjs-webpack-plugin": "^1.1.6",
     "webpack": "^3.10.0",
-    "webpack-dev-server": "^2.11.1"
+    "webpack-dev-server": "^2.11.1",
+    "webpack-merge": "^4.1.4"
   }
 }

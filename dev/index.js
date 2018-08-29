@@ -4,10 +4,9 @@ import {Tree, Button, Radio, Icon, Modal, Input} from 'antd';
 import './css/style.css'
 
 
-
 const TreeNode = Tree.TreeNode;
 
-const group = ['发生大幅的方式', '否', '多福多寿', '的', '测试', '否的撒发生的', '发生的', '发生的', '啊等等等', '发生大幅的身份', '测试', '发生的发生', '收拾收拾', '鳏寡孤独说', '发生大幅撒上发呆', '三大大幅否大幅的的发生', '法定身份的发生大幅的', '发生大幅']
+const group = ['发生大幅的方', '否', '多福多寿', '的', '测试', '否的撒发生的', '发生的', '发生的', '啊等等等', '发生大幅的身份', '测试', '发生的发生', '收拾收拾', '鳏寡孤独说', '发生大幅撒上发呆', '三大大幅否大幅的的发生', '法定身份的发生大幅的', '发生大幅']
 
 
 class Main extends React.Component {
@@ -15,26 +14,28 @@ class Main extends React.Component {
     super(props);
     this.update = this.update.bind(this)
   }
-  
+
   update(state) {
-  
+
   }
-  
+
   render() {
-    return [<div key="top"><a href="">登录</a></div>,<p key="p1" style={{textAlign:'center',color:'#fff'}}><span style={{fontSize:'50px'}}>你好，</span><span>游客</span></p>,<ul className="main-group-content" key="u1">
+    return [<div key="bg" className="bg"></div>,<p key="p1" style={{textAlign: 'center', color: '#fff'}}><span style={{fontSize: '50px'}}>你好，</span><span
+      style={{verticalAlign: 'bottom'}}>游客</span></p>, <ul className="main-group-content" key="u1">
       {
         group.map((option, index) => {
           let h = Math.floor(Math.random() * 360)
           let bgColor = {
-            backgroundColor:'hsl(' + h + ',50%,70%)'
+            backgroundColor: 'hsl(' + h + ',50%,70%)'
           }
-          return (<li className="main-group" key={index} style={bgColor} >{option}</li>)
+          return (<li className="main-group" key={index} style={bgColor}>{option}</li>)
         })
       }
-      <li className="main-group" style={{background: '#878787',color: '#fff'}}><i className="fa fa-plus"></i></li>
-    </ul>]
+      <li className="main-group" style={{background: '#878787', color: '#fff'}}><i className="fa fa-plus"></i></li>
+    </ul>, <div key="option" className="index-options"><a href=""><i className="fa fa-refresh" aria-hidden="true"></i>
+      &nbsp;换一组</a><a href="">登录</a></div>]
   }
-  
+
 }
 
 
