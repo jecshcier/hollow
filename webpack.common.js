@@ -19,7 +19,10 @@ module.exports = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'env']
+          presets: ['react', 'env','es2015'],
+          plugins: [
+            ["transform-class-properties", {"spec": true}]
+          ]
         }
       }
     }, {

@@ -19,6 +19,7 @@ const config = (env) => {
   //development
   else if (env.MODE === 'dev') {
     return merge(common, {
+      devtool: "source-map",
       devServer: {
         contentBase: path.join(__dirname, "dist"),
         compress: true,
