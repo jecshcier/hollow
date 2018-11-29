@@ -19,9 +19,10 @@ module.exports = {
       use: {
         loader: 'babel-loader',
         options: {
-          presets: ['react', 'env','es2015'],
+          presets: ['@babel/react', '@babel/env'],
           plugins: [
-            ["transform-class-properties", {"spec": true}]
+            ["@babel/proposal-class-properties", {"spec": true}],
+            ["@babel/plugin-transform-runtime"]
           ]
         }
       }
@@ -54,7 +55,7 @@ module.exports = {
       template: path.join(__dirname, 'dev/templates/chat.html'),
       hash: true,
       chunks: ['vendor', 'chat'],
-      minify: { //压缩HTML文件
+      minify: {
         removeComments: true, //移除HTML中的注释
         collapseWhitespace: false //删除空白符与换行符
       }
