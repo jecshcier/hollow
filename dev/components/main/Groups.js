@@ -43,6 +43,7 @@ const GroupList = ({groups, showDialog}) => {
 }
 
 export default connect((state) => {
+  console.log(state)
   let {groups} = state
   return {groups}
 }, {showDialog})(GroupList)
